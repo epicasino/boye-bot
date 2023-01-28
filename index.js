@@ -1,5 +1,6 @@
 const fs = require('node:fs');
 const path = require('node:path');
+// eslint-disable-next-line no-unused-vars
 const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
 const { token } = require('./config.json');
 
