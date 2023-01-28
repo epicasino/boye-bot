@@ -1,4 +1,5 @@
 const { REST, Routes } = require('discord.js');
+// eslint-disable-next-line no-unused-vars
 const { clientId, guildId, token } = require('./config.json');
 const fs = require('node:fs');
 
