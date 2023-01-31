@@ -22,7 +22,7 @@ for (const file of eventFiles) {
 }
 
 // Log in to Discord with your client's token
-client.login(token);
+client.login(process.env.token);
 
 client.commands = new Collection();
 
