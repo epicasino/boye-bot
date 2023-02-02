@@ -1,14 +1,16 @@
 const { SlashCommandBuilder } = require('discord.js');
 
-const gifCollection = [ 'https://tenor.com/view/2009cord-gmod-garrys-mod-deez-nuts-hi-gif-22165476', 
-
-'https://tenor.com/view/please-dont-be-cracked-please-dont-be-cracked-gif-21827763', 
-
-'https://tenor.com/view/moosh-fortnite-dont-be-cracked-troll-gif-21907195',
-
-'https://tenor.com/view/kian-osu-dont-be-cracked-drops-phone-valorant-gif-21994708',
-
-'https://tenor.com/view/shigetora-cookiezi-phone-cracked-osu-phone-osu-gif-25052326',
+const gifCollection = [
+	// garrys mod
+	'https://tenor.com/view/2009cord-gmod-garrys-mod-deez-nuts-hi-gif-22165476',
+	// dont be cracked minecraft
+	'https://tenor.com/view/please-dont-be-cracked-please-dont-be-cracked-gif-21827763',
+	// fortnite
+	'https://tenor.com/view/moosh-fortnite-dont-be-cracked-troll-gif-21907195',
+	// valorant
+	'https://tenor.com/view/kian-osu-dont-be-cracked-drops-phone-valorant-gif-21994708',
+	// osu
+	'https://tenor.com/view/shigetora-cookiezi-phone-cracked-osu-phone-osu-gif-25052326',
 ];
 
 module.exports = {
