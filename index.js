@@ -1,4 +1,3 @@
-
 // initialize discord libraries
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
@@ -52,15 +51,6 @@ for (const file of commandFiles) {
 		console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
 	}
 }
-
-// Creates Discord Player
-
-client.player = new Player(client, {
-	ytdlOptions: {
-		quality: 'highestaudio',
-		highWaterMark: 1 << 25,
-	},
-});
 
 // Log in to Discord with your client's token
 client.login(token);
