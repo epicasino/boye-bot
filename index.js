@@ -44,7 +44,7 @@ for (const file of eventFiles) {
 
 // Initialize DisTube
 client.distube = new DisTube(client, {
-    leaveOnStop: false,
+    leaveOnStop: true,
     emitNewSongOnly: true,
     emitAddSongWhenCreatingQueue: false,
     emitAddListWhenCreatingQueue: false,
