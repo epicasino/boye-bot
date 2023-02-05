@@ -18,7 +18,9 @@ const { token, clientId, guildId, } = require('./config.json');
 
 // Client class: specifies bot intents (whats bots should be allowed to do in server)
 const client = new Client({
-	intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildVoiceStates] 
+	intents: [GatewayIntentBits.Guilds, 
+		GatewayIntentBits.GuildMessages, 
+		GatewayIntentBits.GuildVoiceStates] 
 });
 
 // Plugins
@@ -48,13 +50,6 @@ client.distube = new DisTube(client, {
     emitNewSongOnly: true,
     emitAddSongWhenCreatingQueue: false,
     emitAddListWhenCreatingQueue: false,
-    plugins: [
-      new SpotifyPlugin({
-        emitEventsAfterFetching: true
-      }),
-      new SoundCloudPlugin(),
-      new YtDlpPlugin()
-    ]
   })
 
 // Lists all commands
