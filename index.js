@@ -1,8 +1,9 @@
-
 // initialize discord libraries
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
 const { Player } = require('discord-player');
+const { DisTube } = require('distube')
+
 // eslint-disable-next-line no-unused-vars
 const { Client, Collection, GatewayIntentBits } = require('discord.js');
 
@@ -12,13 +13,19 @@ const path = require('node:path');
 
 // import objects in config.json folder
 // eslint-disable-next-line no-unused-vars
-const { token, clientId, guildId } = require('./config.json');
+const { token, clientId, guildId, } = require('./config.json');
 
 
 // Client class: specifies bot intents (whats bots should be allowed to do in server)
 const client = new Client({
 	intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildVoiceStates, GatewayIntentBits.GuildMembers],
 });
+
+// Plugins
+const { SpotifyPlugin } = require('@distube/spotify')
+const { SoundCloudPlugin } = require('@distube/soundcloud')
+const { YtDlpPlugin } = require('@distube/yt-dlp')
+
 
 // Reading event files
 const eventsPath = path.join(__dirname, 'events');
@@ -34,6 +41,21 @@ for (const file of eventFiles) {
 		client.on(event.name, (...args) => event.execute(...args));
 	}
 }
+
+// Initialize DisTube
+client.distube = new DisTube(client, {
+    leaveOnStop: true,
+    emitNewSongOnly: true,
+    emitAddSongWhenCreatingQueue: false,
+    emitAddListWhenCreatingQueue: false,
+    plugins: [
+      new SpotifyPlugin({
+        emitEventsAfterFetching: true
+      }),
+      new SoundCloudPlugin(),
+      new YtDlpPlugin()
+    ]
+  })
 
 // Lists all commands
 client.commands = new Collection();
@@ -52,15 +74,6 @@ for (const file of commandFiles) {
 		console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
 	}
 }
-
-// Creates Discord Player
-
-client.player = new Player(client, {
-	ytdlOptions: {
-		quality: 'highestaudio',
-		highWaterMark: 1 << 25,
-	},
-});
 
 // Log in to Discord with your client's token
 client.login(token);
