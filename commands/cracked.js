@@ -11,6 +11,8 @@ const gifCollection = [
 	'https://tenor.com/view/kian-osu-dont-be-cracked-drops-phone-valorant-gif-21994708',
 	// osu
 	'https://tenor.com/view/shigetora-cookiezi-phone-cracked-osu-phone-osu-gif-25052326',
+	// plateup
+	'https://cdn.discordapp.com/attachments/819817069281411072/1071002605804863528/please_dont_be_cracked_plateup.gif',
 ];
 
 module.exports = {
