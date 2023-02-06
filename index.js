@@ -1,8 +1,8 @@
 // initialize discord libraries
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
-const { Player } = require('discord-player');
-const { DisTube } = require('distube')
+const { Player, Queue } = require('discord-player');
+const ytdl = require('ytdl-core');
 
 // eslint-disable-next-line no-unused-vars
 const { Client, Collection, GatewayIntentBits } = require('discord.js');
@@ -13,21 +13,22 @@ const path = require('node:path');
 
 // import objects in config.json folder
 // eslint-disable-next-line no-unused-vars
-const { token, clientId, guildId, } = require('./config.json');
+const { token, clientId, guildId, prefix } = require('./config.json');
 
 
 // Client class: specifies bot intents (whats bots should be allowed to do in server)
 const client = new Client({
 	intents: [GatewayIntentBits.Guilds, 
 		GatewayIntentBits.GuildMessages, 
-		GatewayIntentBits.GuildVoiceStates] 
+		GatewayIntentBits.GuildVoiceStates,
+		GatewayIntentBits.MessageContent] 
 });
 
-// Plugins
-const { SpotifyPlugin } = require('@distube/spotify')
-const { SoundCloudPlugin } = require('@distube/soundcloud')
-const { YtDlpPlugin } = require('@distube/yt-dlp')
+//Initialize discord-player
+const player = new Player(client);
 
+//trackStart event
+player.on("trackStart", (queue, track) => queue.metadata.channel.send(`Now playing **${track.title}**!`))
 
 // Reading event files
 const eventsPath = path.join(__dirname, 'events');
@@ -43,14 +44,6 @@ for (const file of eventFiles) {
 		client.on(event.name, (...args) => event.execute(...args));
 	}
 }
-
-// Initialize DisTube
-client.distube = new DisTube(client, {
-    leaveOnStop: true,
-    emitNewSongOnly: true,
-    emitAddSongWhenCreatingQueue: false,
-    emitAddListWhenCreatingQueue: false,
-  })
 
 // Lists all commands
 client.commands = new Collection();

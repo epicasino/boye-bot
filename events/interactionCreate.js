@@ -7,6 +7,10 @@ module.exports = {
 
 		const command = interaction.client.commands.get(interaction.commandName);
 
+		//discord-player (resume for later)
+		if (interaction.commandName === 'play') {}
+
+		//resume for later 
 		if (!command) {
 			console.error(`No command matching ${interaction.commandName} was found.`);
 			return;
