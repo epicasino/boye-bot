@@ -24,11 +24,6 @@ const client = new Client({
 		GatewayIntentBits.MessageContent] 
 });
 
-//Initialize discord-player
-const player = new Player(client);
-
-//trackStart event
-player.on("trackStart", (queue, track) => queue.metadata.channel.send(`Now playing **${track.title}**!`))
 
 // Reading event files
 const eventsPath = path.join(__dirname, 'events');
