@@ -9,8 +9,11 @@ module.exports = {
         .setDescription("Adds a track to the end of the server queue.")
         .addStringOption((option) => option.setName("url").setDescription("Enter URL.").setRequired(true)),
     async execute(interaction) {
+
+        await interaction.deferReply();
+
         if (!interaction.member.voice.channelId) {
-            await interaction.reply('Not in VC.');
+            return await interaction.editReply('Not in VC.');
         }
 
         const query = interaction.options.getString("url");
@@ -19,7 +22,7 @@ module.exports = {
             leaveOnStop: true,
             leaveOnEmpty: true,
             leaveOnEmptyCooldown: 300000,
-            autoSelfDeaf: false,
+            autoSelfDeaf: true,
             spotifyBridge: true,
             ytdlOptions: {
                 filter: "audioonly",
@@ -35,8 +38,8 @@ module.exports = {
         try {
             if (!queue.connection) await queue.connect(interaction.member.voice.channel);
         } catch (err) {
-            queue.destroy();
-            await interaction.reply("I can't join that voice channel.");
+            await queue.destroy();
+            return await interaction.editReply("I can't join that voice channel.");
         }
 
         const res = await global.player.search(query, {
@@ -45,7 +48,7 @@ module.exports = {
 
         if (!res) {
             await queue.destroy();
-            interaction.reply(`I couldn't find anything with the name **${query}**.`);
+            return await interaction.editReply(`I couldn't find anything with the name **${query}**.`);
         }
 
         try {
@@ -55,22 +58,19 @@ module.exports = {
             if (err instanceof PlayerError) {
                 if (err.statusCode == "InvalidTrack") {
                     await interaction.reply(`I couldn't find anything with the name **${query}**.`);
-                    await queue.destroy();
+                    return await queue.destroy();
                 }
             }
 
             console.error(err);
-
-            await queue.destroy();
-            interaction.reply("This media doesn't seem to be working right now, please try again later.");
+            await interaction.editReply("This media doesn't seem to be working right now, please try again later.");
+            return await queue.destroy();
         }
 
         if (!res.playlist) {
-            interaction.reply(`Loaded **[${res.tracks[0].title}](${res.tracks[0].url})** by **${res.tracks[0].author}** into the server queue.`);
+            interaction.editReply(`Loaded **[${res.tracks[0].title}](${res.tracks[0].url})** by **${res.tracks[0].author}** into the server queue.`);
         } else {
-            interaction.reply(`**${res.tracks.length} tracks** from the ${res.playlist.type} **[${res.playlist.title}](${res.playlist.url})** have been loaded into the server queue.`);
+            interaction.editReply(`**${res.tracks.length} tracks** from the ${res.playlist.type} **[${res.playlist.title}](${res.playlist.url})** have been loaded into the server queue.`);
         }
-
-        return await interaction.editReply({ embeds: [embed] });
     },
 };
