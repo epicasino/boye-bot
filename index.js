@@ -24,6 +24,7 @@ const client = new Client({
 		GatewayIntentBits.MessageContent] 
 });
 
+global.player = new Player(client);
 
 // Reading event files
 const eventsPath = path.join(__dirname, 'events');
