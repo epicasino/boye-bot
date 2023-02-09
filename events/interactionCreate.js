@@ -1,4 +1,3 @@
-const { Player } = require('discord-player');
 const { Events } = require('discord.js');
 
 module.exports = {
