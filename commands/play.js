@@ -38,7 +38,7 @@ module.exports = {
         try {
             if (!queue.connection) await queue.connect(interaction.member.voice.channel);
         } catch (err) {
-            await queue.destroy();
+            queue.destroy();
             return await interaction.editReply("I can't join that voice channel.");
         }
 
@@ -63,8 +63,8 @@ module.exports = {
             }
 
             console.error(err);
-            await interaction.editReply("This media doesn't seem to be working right now, please try again later.");
-            return await queue.destroy();
+            await queue.destroy();
+            return await interaction.editReply("This media doesn't seem to be working right now, please try again later.");
         }
 
         if (!res.playlist) {
