@@ -1,3 +1,6 @@
+// .env
+require('dotenv').config();
+
 // initialize discord libraries
 const { Player } = require('discord-player');
 
