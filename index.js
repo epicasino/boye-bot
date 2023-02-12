@@ -1,23 +1,19 @@
 // initialize discord libraries
-const { REST } = require('@discordjs/rest');
-const { Routes } = require('discord-api-types/v9');
-const { Player, Queue } = require('discord-player');
-const ytdl = require('ytdl-core');
+const { Player } = require('discord-player');
+
+// eslint-disable-next-line no-unused-vars
+const { Client, Collection, GatewayIntentBits } = require('discord.js');
 
 // initialize commands in commands folder
 const fs = require('node:fs');
 const path = require('node:path');
 
-// import objects in config.json folder
-// eslint-disable-next-line no-unused-vars
-const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
-
 // Client class: specifies bot intents (whats bots should be allowed to do in server)
 const client = new Client({
-	intents: [GatewayIntentBits.Guilds, 
-		GatewayIntentBits.GuildMessages, 
+	intents: [GatewayIntentBits.Guilds,
+		GatewayIntentBits.GuildMessages,
 		GatewayIntentBits.GuildVoiceStates,
-		GatewayIntentBits.MessageContent] 
+		GatewayIntentBits.MessageContent],
 });
 
 global.player = new Player(client);
