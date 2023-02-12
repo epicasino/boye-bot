@@ -4,17 +4,13 @@ const { Routes } = require('discord-api-types/v9');
 const { Player, Queue } = require('discord-player');
 const ytdl = require('ytdl-core');
 
-// eslint-disable-next-line no-unused-vars
-const { Client, Collection, GatewayIntentBits } = require('discord.js');
-
 // initialize commands in commands folder
 const fs = require('node:fs');
 const path = require('node:path');
 
 // import objects in config.json folder
 // eslint-disable-next-line no-unused-vars
-const { token, clientId, guildId, prefix } = require('./config.json');
-
+const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
 
 // Client class: specifies bot intents (whats bots should be allowed to do in server)
 const client = new Client({
@@ -60,4 +56,4 @@ for (const file of commandFiles) {
 }
 
 // Log in to Discord with your client's token
-client.login(token);
+client.login(process.env.token);
