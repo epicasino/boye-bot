@@ -52,4 +52,4 @@ for (const file of commandFiles) {
 }
 
 // Log in to Discord with your client's token
-client.login(process.env.token);
+client.login(process.env.TOKEN);
