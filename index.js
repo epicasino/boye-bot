@@ -1,10 +1,26 @@
+// initialize discord libraries
+const { REST } = require('@discordjs/rest');
+const { Routes } = require('discord-api-types/v9');
+const { Player, Queue } = require('discord-player');
+const ytdl = require('ytdl-core');
+
+// initialize commands in commands folder
 const fs = require('node:fs');
 const path = require('node:path');
+
+// import objects in config.json folder
 // eslint-disable-next-line no-unused-vars
 const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
-// const { token } = require('./config.json');
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+// Client class: specifies bot intents (whats bots should be allowed to do in server)
+const client = new Client({
+	intents: [GatewayIntentBits.Guilds, 
+		GatewayIntentBits.GuildMessages, 
+		GatewayIntentBits.GuildVoiceStates,
+		GatewayIntentBits.MessageContent] 
+});
+
+global.player = new Player(client);
 
 // Reading event files
 const eventsPath = path.join(__dirname, 'events');
@@ -21,9 +37,7 @@ for (const file of eventFiles) {
 	}
 }
 
-// Log in to Discord with your client's token
-client.login(process.env.token);
-
+// Lists all commands
 client.commands = new Collection();
 
 const commandsPath = path.join(__dirname, 'commands');
@@ -40,3 +54,6 @@ for (const file of commandFiles) {
 		console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
 	}
 }
+
+// Log in to Discord with your client's token
+client.login(process.env.token);
